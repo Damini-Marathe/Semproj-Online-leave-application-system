@@ -1,0 +1,653 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Apply Leave</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background-color: #f2faff;
+            color: #333;
+        }
+
+        /* Header */
+
+        .header {
+            background-color: #6bb6d9;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .header p {
+            margin-top: 8px;
+            margin-bottom: 0;
+        }
+
+        /* Navigation */
+
+        nav {
+            background-color: white;
+            text-align: center;
+            padding: 12px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #287da5;
+            font-weight: bold;
+            margin: 0 12px;
+        }
+
+        nav a:hover {
+            color: #155d7d;
+        }
+
+        /* Main Form */
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 35px auto;
+        }
+
+        .form-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+        }
+
+        .form-box h2 {
+            text-align: center;
+            color: #287da5;
+            margin-bottom: 25px;
+        }
+
+        /* Table */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 10px;
+        }
+
+        td:first-child {
+            width: 35%;
+            font-weight: bold;
+        }
+
+        /* Input Fields */
+
+        input[type="text"],
+        input[type="date"],
+        input[type="file"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #b7dbea;
+            border-radius: 5px;
+            outline: none;
+            background-color: white;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #6bb6d9;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        /* Buttons */
+
+        input[type="submit"],
+        input[type="reset"] {
+            padding: 11px 22px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #6bb6d9;
+            color: white;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #4d9fc5;
+        }
+
+        input[type="reset"] {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+        input[type="reset"]:hover {
+            background-color: #cccccc;
+        }
+
+        /* Bottom Links */
+
+        .links {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .links a {
+            color: #287da5;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 8px;
+        }
+
+        .links a:hover {
+            color: #155d7d;
+        }
+
+        /* Footer */
+
+        footer {
+            background-color: #4d9fc5;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            nav a {
+                display: block;
+                margin: 8px;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            .form-box {
+                padding: 20px;
+            }
+
+            table,
+            tbody,
+            tr,
+            td {
+                display: block;
+                width: 100%;
+            }
+
+            td:first-child {
+                width: 100%;
+                padding-bottom: 3px;
+            }
+
+            td {
+                padding: 6px 0;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- Header -->
+
+    <div class="header">
+
+        <h1>🎓 Student Leave Management System</h1>
+
+        <p>Apply Leave Online Easily</p>
+
+    </div>
+
+
+    <!-- Navigation -->
+
+    <nav>
+
+        <a href="index.html">Home</a>
+
+        <a href="student_login.html">Student Login</a>
+
+        <a href="apply_leave.html">Apply Leave</a>
+
+        <a href="status_tracker.html">Track Status</a>
+
+        <a href="admin-login.html">Admin</a>
+
+    </nav>
+
+
+    <!-- Main Container -->
+
+    <div class="container">
+
+        <div class="form-box">
+
+            <h2>Leave Application Form</h2>
+
+
+            <form id="leaveForm">
+
+                <table>
+
+                    <!-- Student Name -->
+
+                    <tr>
+
+                        <td>Student Name</td>
+
+                        <td>
+                            <input
+                                type="text"
+                                id="studentName"
+                                placeholder="Enter Full Name"
+                                required>
+                        </td>
+
+                    </tr>
+
+
+                    <!-- PRN Number -->
+
+                    <tr>
+
+                        <td>PRN Number</td>
+
+                        <td>
+                            <input
+                                type="text"
+                                id="prn"
+                                placeholder="Enter PRN Number"
+                                required>
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Department -->
+
+                    <tr>
+
+                        <td>Department</td>
+
+                        <td>
+
+                            <select id="department" required>
+
+                                <option value="">
+                                    Select Department
+                                </option>
+
+                                <option>
+                                    Computer Engineering
+                                </option>
+
+                                <option>
+                                    Information Technology
+                                </option>
+
+                                <option>
+                                    Artificial Intelligence & ML
+                                </option>
+
+                                <option>
+                                    Mechanical Engineering
+                                </option>
+
+                                <option>
+                                    Civil Engineering
+                                </option>
+
+                                <option>
+                                    Electronics Engineering
+                                </option>
+
+                            </select>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Year -->
+
+                    <tr>
+
+                        <td>Year</td>
+
+                        <td>
+
+                            <select id="year" required>
+
+                                <option value="">
+                                    Select Year
+                                </option>
+
+                                <option>First Year</option>
+
+                                <option>Second Year</option>
+
+                                <option>Third Year</option>
+
+                                <option>Final Year</option>
+
+                            </select>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Leave Type -->
+
+                    <tr>
+
+                        <td>Leave Type</td>
+
+                        <td>
+
+                            <select id="leaveType" required>
+
+                                <option value="">
+                                    Select Leave Type
+                                </option>
+
+                                <option>Sick Leave</option>
+
+                                <option>Medical Leave</option>
+
+                                <option>Personal Leave</option>
+
+                                <option>Emergency Leave</option>
+
+                                <option>Other</option>
+
+                            </select>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- From Date -->
+
+                    <tr>
+
+                        <td>From Date</td>
+
+                        <td>
+
+                            <input
+                                type="date"
+                                id="fromDate"
+                                required>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- To Date -->
+
+                    <tr>
+
+                        <td>To Date</td>
+
+                        <td>
+
+                            <input
+                                type="date"
+                                id="toDate"
+                                required>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Reason -->
+
+                    <tr>
+
+                        <td>Reason</td>
+
+                        <td>
+
+                            <textarea
+                                id="reason"
+                                rows="5"
+                                placeholder="Enter Reason for Leave"
+                                required></textarea>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Document -->
+
+                    <tr>
+
+                        <td>Upload Document</td>
+
+                        <td>
+
+                            <input
+                                type="file"
+                                id="document">
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Buttons -->
+
+                    <tr>
+
+                        <td colspan="2" align="center">
+
+                            <input
+                                type="submit"
+                                value="Submit Leave">
+
+                            <input
+                                type="reset"
+                                value="Clear">
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- Bottom Links -->
+
+    <div class="links">
+
+        <a href="index.html">Home</a>
+
+        |
+
+        <a href="student_login.html">Student Login</a>
+
+        |
+
+        <a href="status_tracker.html">Track Status</a>
+
+    </div>
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        <p>© 2026 Student Leave Management System</p>
+
+    </footer>
+
+
+    <!-- Local Database JavaScript -->
+
+    <script>
+
+        document.getElementById("leaveForm").addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+
+                // Get form data
+
+                let studentName =
+                    document.getElementById("studentName").value.trim();
+
+                let prn =
+                    document.getElementById("prn").value.trim();
+
+                let department =
+                    document.getElementById("department").value;
+
+                let year =
+                    document.getElementById("year").value;
+
+                let leaveType =
+                    document.getElementById("leaveType").value;
+
+                let fromDate =
+                    document.getElementById("fromDate").value;
+
+                let toDate =
+                    document.getElementById("toDate").value;
+
+                let reason =
+                    document.getElementById("reason").value.trim();
+
+
+                // Check dates
+
+                if (toDate < fromDate) {
+
+                    alert("To Date cannot be before From Date.");
+
+                    return;
+
+                }
+
+
+                // Create leave application
+
+                let leaveApplication = {
+
+                    studentName: studentName,
+
+                    prn: prn,
+
+                    department: department,
+
+                    year: year,
+
+                    leaveType: leaveType,
+
+                    fromDate: fromDate,
+
+                    toDate: toDate,
+
+                    reason: reason,
+
+                    status: "Pending"
+
+                };
+
+
+                // Get existing data from LocalStorage
+
+                let applications =
+                    JSON.parse(
+                        localStorage.getItem("leaveApplications")
+                    ) || [];
+
+
+                // Add new application
+
+                applications.push(leaveApplication);
+
+
+                // Save data in LocalStorage
+
+                localStorage.setItem(
+                    "leaveApplications",
+                    JSON.stringify(applications)
+                );
+
+
+                // Success message
+
+                alert(
+                    "Leave application submitted successfully!"
+                );
+
+
+                // Clear form
+
+                document
+                    .getElementById("leaveForm")
+                    .reset();
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
+```

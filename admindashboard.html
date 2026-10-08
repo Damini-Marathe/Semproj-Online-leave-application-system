@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            background: #f4f6f9;
+        }
+
+
+        /* SIDEBAR */
+
+        .sidebar {
+
+            position: fixed;
+
+            width: 240px;
+
+            height: 100vh;
+
+            background: #1e293b;
+
+            padding: 25px 15px;
+
+            color: white;
+
+        }
+
+
+        .sidebar h2 {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .sidebar a {
+
+            display: block;
+
+            padding: 14px;
+
+            margin: 7px 0;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 7px;
+
+        }
+
+
+        .sidebar a:hover {
+
+            background: #334155;
+
+        }
+
+
+        .sidebar .active {
+
+            background: #2563eb;
+
+        }
+
+
+        .logout {
+
+            background: #dc2626;
+
+            margin-top: 25px !important;
+
+        }
+
+
+        /* MAIN */
+
+        .main {
+
+            margin-left: 240px;
+
+            padding: 25px;
+
+        }
+
+
+        .topbar {
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        /* CARDS */
+
+        .cards {
+
+            display: grid;
+
+            grid-template-columns:
+            repeat(4, 1fr);
+
+            gap: 20px;
+
+        }
+
+
+        .card {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            box-shadow:
+            0 2px 8px #ddd;
+
+        }
+
+
+        .card h3 {
+
+            color: #64748b;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .card p {
+
+            font-size: 30px;
+
+            font-weight: bold;
+
+            color: #2563eb;
+
+        }
+
+
+        /* TABLE */
+
+        .table-box {
+
+            background: white;
+
+            margin-top: 30px;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            overflow-x: auto;
+
+        }
+
+
+        .table-box h2 {
+
+            margin-bottom: 20px;
+
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+        }
+
+
+        th,
+        td {
+
+            padding: 12px;
+
+            border-bottom:
+            1px solid #ddd;
+
+            text-align: center;
+
+        }
+
+
+        th {
+
+            background: #1e293b;
+
+            color: white;
+
+        }
+
+
+        /* STATUS */
+
+        .status {
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-weight: bold;
+
+        }
+
+
+        .pending {
+
+            background: #fef3c7;
+
+            color: #92400e;
+
+        }
+
+
+        .approved {
+
+            background: #dcfce7;
+
+            color: #166534;
+
+        }
+
+
+        .rejected {
+
+            background: #fee2e2;
+
+            color: #991b1b;
+
+        }
+
+
+        /* BUTTONS */
+
+        button {
+
+            padding: 7px 12px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            color: white;
+
+            cursor: pointer;
+
+            margin: 2px;
+
+        }
+
+
+        .approve {
+
+            background: #16a34a;
+
+        }
+
+
+        .reject {
+
+            background: #dc2626;
+
+        }
+
+
+        button:hover {
+
+            opacity: 0.8;
+
+        }
+
+
+        /* MESSAGE */
+
+        .empty {
+
+            text-align: center;
+
+            padding: 30px;
+
+            color: #64748b;
+
+            font-size: 18px;
+
+        }
+
+
+        /* MOBILE */
+
+        @media(max-width: 900px) {
+
+            .cards {
+
+                grid-template-columns:
+                repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media(max-width: 600px) {
+
+            .sidebar {
+
+                width: 70px;
+
+            }
+
+
+            .sidebar h2 {
+
+                display: none;
+
+            }
+
+
+            .sidebar a {
+
+                font-size: 0;
+
+                text-align: center;
+
+            }
+
+
+            .main {
+
+                margin-left: 70px;
+
+            }
+
+
+            .cards {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <h2>
+            Admin Panel
+        </h2>
+
+
+        <a href="admin-dashboard.html"
+           class="active">
+
+            🏠 Dashboard
+
+        </a>
+
+
+        <a href="leave-applications.html">
+
+            📄 Leave Applications
+
+        </a>
+
+
+        <a href="students.html">
+
+            👨‍🎓 Students
+
+        </a>
+
+
+        <a href="leave-history.html">
+
+            📋 Leave History
+
+        </a>
+
+
+        <a href="notifications.html">
+
+            🔔 Notifications
+
+        </a>
+
+
+        <a href="admin-profile.html">
+
+            👤 Profile
+
+        </a>
+
+
+        <a href="login.html"
+           class="logout">
+
+            🚪 Logout
+
+        </a>
+
+    </div>
+
+
+
+    <!-- MAIN -->
+
+    <div class="main">
+
+
+        <!-- TOP BAR -->
+
+        <div class="topbar">
+
+            <h1>
+                Admin Dashboard
+            </h1>
+
+
+            <span>
+
+                Welcome,
+                <b>Admin</b> 👋
+
+            </span>
+
+        </div>
+
+
+
+        <!-- CARDS -->
+
+        <div class="cards">
+
+
+            <div class="card">
+
+                <h3>
+                    Total Students
+                </h3>
+
+                <p id="totalStudents">
+                    0
+                </p>
+
+            </div>
+
+
+
+            <div class="card">
+
+                <h3>
+                    Total Applications
+                </h3>
+
+                <p id="totalApplications">
+                    0
+                </p>
+
+            </div>
+
+
+
+            <div class="card">
+
+                <h3>
+                    Pending
+                </h3>
+
+                <p id="pendingApplications">
+                    0
+                </p>
+
+            </div>
+
+
+
+            <div class="card">
+
+                <h3>
+                    Approved
+                </h3>
+
+                <p id="approvedApplications">
+                    0
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- APPLICATION TABLE -->
+
+        <div class="table-box">
+
+
+            <h2>
+                Leave Applications
+            </h2>
+
+
+            <table>
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Student
+                        </th>
+
+                        <th>
+                            PRN
+                        </th>
+
+                        <th>
+                            Department
+                        </th>
+
+                        <th>
+                            Leave Type
+                        </th>
+
+                        <th>
+                            From
+                        </th>
+
+                        <th>
+                            To
+                        </th>
+
+                        <th>
+                            Reason
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="leaveTable">
+
+                </tbody>
+
+
+            </table>
+
+
+            <div
+                id="emptyMessage"
+                class="empty"
+                style="display:none;">
+
+                No leave applications found.
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+
+        /* LOAD APPLICATIONS */
+
+        function loadApplications() {
+
+
+            let applications =
+
+                JSON.parse(
+
+                    localStorage
+                    .getItem("leaveApplications")
+
+                ) || [];
+
+
+
+            let table =
+
+                document
+                .getElementById("leaveTable");
+
+
+
+            table.innerHTML = "";
+
+
+
+            if (applications.length === 0) {
+
+                document
+                .getElementById("emptyMessage")
+                .style.display = "block";
+
+            }
+
+            else {
+
+                document
+                .getElementById("emptyMessage")
+                .style.display = "none";
+
+            }
+
+
+
+            let pending = 0;
+
+            let approved = 0;
+
+
+
+            /* REMOVE DUPLICATE PRNs */
+
+            let uniquePRNs =
+
+                new Set();
+
+
+
+            applications.forEach(
+
+                function(application, index) {
+
+
+                    uniquePRNs.add(
+                        application.prn
+                    );
+
+
+
+                    if (
+                        application.status
+                        === "Pending"
+                    ) {
+
+                        pending++;
+
+                    }
+
+
+
+                    if (
+                        application.status
+                        === "Approved"
+                    ) {
+
+                        approved++;
+
+                    }
+
+
+
+                    let applicationId =
+
+                        "LA" +
+
+                        String(index + 1)
+                        .padStart(3, "0");
+
+
+
+                    let statusClass =
+
+                        application.status
+                        .toLowerCase();
+
+
+
+                    let action = "";
+
+
+
+                    if (
+                        application.status
+                        === "Pending"
+                    ) {
+
+
+                        action = `
+
+                            <button
+                                class="approve"
+                                onclick="approveLeave(${index})">
+
+                                Approve
+
+                            </button>
+
+
+                            <button
+                                class="reject"
+                                onclick="rejectLeave(${index})">
+
+                                Reject
+
+                            </button>
+
+                        `;
+
+                    }
+
+                    else {
+
+
+                        action =
+                            "<b>Completed</b>";
+
+                    }
+
+
+
+                    table.innerHTML += `
+
+                        <tr>
+
+                            <td>
+                                ${applicationId}
+                            </td>
+
+                            <td>
+                                ${application.studentName}
+                            </td>
+
+                            <td>
+                                ${application.prn}
+                            </td>
+
+                            <td>
+                                ${application.department}
+                            </td>
+
+                            <td>
+                                ${application.leaveType}
+                            </td>
+
+                            <td>
+                                ${application.fromDate}
+                            </td>
+
+                            <td>
+                                ${application.toDate}
+                            </td>
+
+                            <td>
+                                ${application.reason}
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="status
+                                    ${statusClass}">
+
+                                    ${application.status}
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                ${action}
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+
+                }
+
+            );
+
+
+
+            /* UPDATE CARDS */
+
+
+            document
+            .getElementById("totalApplications")
+            .innerText =
+                applications.length;
+
+
+
+            document
+            .getElementById("pendingApplications")
+            .innerText =
+                pending;
+
+
+
+            document
+            .getElementById("approvedApplications")
+            .innerText =
+                approved;
+
+
+
+            document
+            .getElementById("totalStudents")
+            .innerText =
+                uniquePRNs.size;
+
+        }
+
+
+
+        /* APPROVE */
+
+
+        function approveLeave(index) {
+
+
+            let applications =
+
+                JSON.parse(
+
+                    localStorage
+                    .getItem("leaveApplications")
+
+                ) || [];
+
+
+
+            applications[index].status =
+                "Approved";
+
+
+
+            localStorage.setItem(
+
+                "leaveApplications",
+
+                JSON.stringify(applications)
+
+            );
+
+
+
+            loadApplications();
+
+
+        }
+
+
+
+        /* REJECT */
+
+
+        function rejectLeave(index) {
+
+
+            let applications =
+
+                JSON.parse(
+
+                    localStorage
+                    .getItem("leaveApplications")
+
+                ) || [];
+
+
+
+            applications[index].status =
+                "Rejected";
+
+
+
+            localStorage.setItem(
+
+                "leaveApplications",
+
+                JSON.stringify(applications)
+
+            );
+
+
+
+            loadApplications();
+
+
+        }
+
+
+
+        /* LOAD WHEN PAGE OPENS */
+
+
+        loadApplications();
+
+
+    </script>
+
+
+</body>
+
+</html>

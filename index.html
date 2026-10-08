@@ -1,0 +1,419 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Leave Management System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f2faff;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background-color: #6bb6d9;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: white;
+            padding: 12px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #287da5;
+            margin: 0 12px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #155d7d;
+        }
+
+        /* Main Container */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        /* Welcome Section */
+        .welcome {
+            background-color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .welcome h2 {
+            color: #287da5;
+            margin-bottom: 12px;
+        }
+
+        .welcome p {
+            line-height: 1.6;
+        }
+
+        /* College Image */
+        .college-image {
+            width: 100%;
+            height: auto;
+            max-height: 450px;
+            object-fit: contain;
+            margin-top: 20px;
+            border-radius: 8px;
+            display: block;
+        }
+
+        /* Features */
+        .features {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .feature-box {
+            background-color: white;
+            padding: 25px;
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            border-radius: 8px;
+            border-top: 4px solid #6bb6d9;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .feature-box h3 {
+            color: #287da5;
+            margin-bottom: 10px;
+        }
+
+        .feature-box p {
+            line-height: 1.5;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            background-color: white;
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .how-it-works h2 {
+            color: #287da5;
+            margin-bottom: 15px;
+        }
+
+        .how-it-works ol {
+            padding-left: 25px;
+            line-height: 2;
+        }
+
+        /* Buttons */
+        .buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #6bb6d9;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            margin: 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #4d9fc5;
+            transform: translateY(-2px);
+        }
+
+        /* Notice */
+        .notice {
+            background-color: #e4f5fc;
+            border-left: 5px solid #6bb6d9;
+            padding: 15px;
+            margin-top: 30px;
+            border-radius: 5px;
+        }
+
+        .notice h3 {
+            color: #287da5;
+            margin-bottom: 8px;
+        }
+
+        /* Contact */
+        .contact {
+            background-color: white;
+            margin-top: 30px;
+            padding: 25px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .contact h2 {
+            color: #287da5;
+            margin-bottom: 10px;
+        }
+
+        .contact p {
+            margin: 5px 0;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #4d9fc5;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+
+            header {
+                padding: 15px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+
+            header p {
+                font-size: 14px;
+            }
+
+            nav a {
+                display: block;
+                margin: 8px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .welcome {
+                padding: 20px;
+            }
+
+            .welcome h2 {
+                font-size: 21px;
+            }
+
+            /* Mobile College Image */
+            .college-image {
+                width: 100%;
+                height: auto;
+                max-height: none;
+                object-fit: contain;
+            }
+
+            .features {
+                flex-direction: column;
+            }
+
+            .feature-box {
+                min-width: 100%;
+            }
+
+            .btn {
+                width: 90%;
+                margin: 6px auto;
+            }
+        }
+    </style>
+</head>
+
+<!-- Add this in head tag -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+// 1. Paste your keys here (Get from Supabase -> Project Settings -> API)
+const SUPABASE_URL = "https://fpwcrlcqxiuuuigzwhrp.supabase.co/rest/v1/"
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZwd2NybGNxeGl1dXVpZ3p3aHJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEzNTIzODcsImV4cCI6MjEwNjkyODM4N30.D4lAeREYUL5fmDcsZPWEaLzs1HEdtvzHPJpUFeMZ8h4"
+
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+// 2. When student submits form
+const form = document.getElementById('leaveForm');
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const { error } = await supabaseClient
+    .from('leave_applications')
+    .insert([{
+      student_name: document.getElementById('name').value,
+      roll_no: document.getElementById('roll').value,
+      leave_reason: document.getElementById('reason').value,
+      from_date: document.getElementById('fromDate').value,
+      to_date: document.getElementById('toDate').value,
+    }])
+
+  if(error){
+    alert("Error: " + error.message)
+  } else {
+    alert("Leave Application Submitted Successfully!");
+    form.reset();
+  }
+})
+</script>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>🎓 Student Leave Application System</h1>
+        <p>Apply Leave Online Easily</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="student_login.html">Student Login</a>
+        <a href="status_tracker.html">Track Status</a>
+        <a href="admin-login.html">Admin</a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+
+        <!-- Welcome -->
+        <section class="welcome">
+
+            <h2>Welcome to Student Leave Application System</h2>
+
+            <p>
+                This system allows students to apply for leave online
+                and easily check the status of their leave applications.
+            </p>
+
+            <img src="college.jpg"
+                 alt="College Image"
+                 class="college-image">
+
+        </section>
+
+        <!-- Features -->
+        <section class="features">
+
+            <div class="feature-box">
+                <h3>📝 Apply Leave</h3>
+                <p>
+                    Students can submit their leave applications
+                    online with all required details.
+                </p>
+            </div>
+
+            <div class="feature-box">
+                <h3>📊 Track Status</h3>
+                <p>
+                    Students can check whether their leave is
+                    Pending, Approved or Rejected.
+                </p>
+            </div>
+
+            <div class="feature-box">
+                <h3>👨‍💼 Admin Management</h3>
+                <p>
+                    Admin can view applications and approve or
+                    reject student leave requests.
+                </p>
+            </div>
+
+        </section>
+
+        <!-- How It Works -->
+        <section class="how-it-works">
+
+            <h2>How It Works</h2>
+
+            <ol>
+                <li>Student Login</li>
+                <li>Fill the Leave Application Form</li>
+                <li>Submit the Leave Application</li>
+                <li>Admin Reviews the Application</li>
+                <li>Student Checks Leave Status</li>
+            </ol>
+
+        </section>
+
+        <!-- Quick Access Buttons -->
+        <div class="buttons">
+
+            <a href="student_login.html" class="btn">
+                Student Login
+            </a>
+
+            <a href="admin-login.html" class="btn">
+                Admin login
+            </a>
+
+        </div>
+
+        <!-- Important Notice -->
+        <section class="notice">
+
+            <h3>📢 Important Notice</h3>
+
+            <marquee>
+                Students are requested to submit their leave applications
+                before the required deadline.
+            </marquee>
+
+        </section>
+
+        <!-- Contact -->
+        <section class="contact">
+
+            <h2>Contact Us</h2>
+
+            <p>Email: rcpitcollege@gmail.com</p>
+            <p>Phone: +91 1800232425</p>
+
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Student Leave Application System</p>
+    </footer>
+
+</body>
+</html>
+```

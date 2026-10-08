@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Leave Status Tracker</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+        }
+
+        h1 {
+            color: #1e293b;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 30px auto;
+        }
+
+        .box {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px #ddd;
+            margin-bottom: 25px;
+        }
+
+        input {
+            padding: 10px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #1e293b;
+            color: white;
+        }
+
+        .pending {
+            color: #d97706;
+            font-weight: bold;
+        }
+
+        .approved {
+            color: #16a34a;
+            font-weight: bold;
+        }
+
+        .rejected {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .message {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        a {
+            text-decoration: none;
+            color: #2563eb;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <h1 align="center">
+        🎓 Student Leave Management System
+    </h1>
+
+    <hr>
+
+
+    <div class="container">
+
+        <!-- SEARCH BOX -->
+
+        <div class="box">
+
+            <h2 align="center">
+                Leave Status Tracker
+            </h2>
+
+            <form id="statusForm">
+
+                <table>
+
+                    <tr>
+
+                        <td>
+                            PRN Number
+                        </td>
+
+                        <td>
+
+                            <input
+                                type="text"
+                                id="prn"
+                                placeholder="Enter PRN Number"
+                                required>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td colspan="2">
+
+                            <button type="submit">
+                                Check Status
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </form>
+
+
+            <p id="message" class="message"></p>
+
+        </div>
+
+
+        <!-- RESULT -->
+
+        <div
+            class="box"
+            id="resultBox"
+            style="display:none;">
+
+            <h3 align="center">
+                Your Leave Applications
+            </h3>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Application ID</th>
+                        <th>Student Name</th>
+                        <th>Leave Type</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="result">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <hr>
+
+
+    <center>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        |
+
+        <a href="student_login.html">
+            Student Login
+        </a>
+
+        |
+
+        <a href="apply_leave.html">
+            Apply Leave
+        </a>
+
+    </center>
+
+
+    <hr>
+
+
+    <p align="center">
+        © 2026 Student Leave Management System
+    </p>
+
+
+    <script>
+
+        document
+        .getElementById("statusForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+
+            let prn =
+                document
+                .getElementById("prn")
+                .value
+                .trim();
+
+
+            let applications =
+                JSON.parse(
+                    localStorage.getItem("leaveApplications")
+                ) || [];
+
+
+            let studentApplications =
+                applications.filter(function(application) {
+
+                    return application.prn === prn;
+
+                });
+
+
+            let message =
+                document.getElementById("message");
+
+
+            let resultBox =
+                document.getElementById("resultBox");
+
+
+            let result =
+                document.getElementById("result");
+
+
+            if (studentApplications.length === 0) {
+
+                resultBox.style.display = "none";
+
+                message.innerHTML =
+                    "❌ No leave applications found for this PRN.";
+
+                message.style.color = "red";
+
+                return;
+
+            }
+
+
+            result.innerHTML = "";
+
+
+            studentApplications.forEach(function(application) {
+
+                let originalIndex =
+                    applications.indexOf(application);
+
+
+                let applicationId =
+                    "LA" +
+                    String(originalIndex + 1)
+                    .padStart(3, "0");
+
+
+                let statusClass =
+                    application.status.toLowerCase();
+
+
+                result.innerHTML += `
+
+                    <tr>
+
+                        <td>
+                            ${applicationId}
+                        </td>
+
+                        <td>
+                            ${application.studentName}
+                        </td>
+
+                        <td>
+                            ${application.leaveType}
+                        </td>
+
+                        <td>
+                            ${application.fromDate}
+                        </td>
+
+                        <td>
+                            ${application.toDate}
+                        </td>
+
+                        <td>
+                            ${application.reason}
+                        </td>
+
+                        <td class="${statusClass}">
+                            ${application.status}
+                        </td>
+
+                    </tr>
+
+                `;
+
+            });
+
+
+            resultBox.style.display = "block";
+
+
+            message.innerHTML =
+                "✅ Leave applications found.";
+
+            message.style.color = "green";
+
+        });
+
+    </script>
+
+</body>
+
+</html>

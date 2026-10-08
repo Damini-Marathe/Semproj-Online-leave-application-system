@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Login</title>
+</head>
+
+<body>
+
+    <h2>Admin Login</h2>
+
+    <form onsubmit="login(event)">
+
+        <input type="text" id="id" placeholder="Admin ID" required>
+        <br><br>
+
+        <input type="password" id="pass" placeholder="Password" required>
+        <br><br>
+
+        <button type="submit">Login</button>
+
+    </form>
+
+    <p id="msg"></p>
+
+    <script>
+
+        function login(event) {
+
+            event.preventDefault();
+
+            let id = document.getElementById("id").value;
+            let pass = document.getElementById("pass").value;
+
+            if (id === "rcpit" && pass === "Admin@123") {
+
+                window.location.href = "./admin-dashboard.html";
+
+            } else {
+
+                document.getElementById("msg").innerHTML =
+                    "Wrong Admin ID or Password";
+
+            }
+        }
+
+    </script>
+
+</body>
+</html>
