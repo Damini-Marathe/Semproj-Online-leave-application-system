@@ -958,7 +958,49 @@
 
 
     </script>
+<!-- Supabase Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Your Connection Script -->
+<script src="supabase.js"></script>
+<script>
+  async function fetchLeaves() {
+    const { data: requests, error } = await supabase
+      .from('leave_requests')
+      .select('*')
+      .order('created_at', { ascending: false });
 
+    if (error) return console.error(error);
+
+    const tableBody = document.getElementById("leaveRequestsTableBody");
+    tableBody.innerHTML = "";
+
+    requests.forEach((req) => {
+      tableBody.innerHTML += `
+        <tr>
+          <td>${req.student_name}</td>
+          <td>${req.reason}</td>
+          <td>${req.start_date} to ${req.end_date}</td>
+          <td>${req.status}</td>
+          <td>
+            <button onclick="updateStatus(${req.id}, 'Approved')">Approve</button>
+            <button onclick="updateStatus(${req.id}, 'Rejected')">Reject</button>
+          </td>
+        </tr>
+      `;
+    });
+  }
+
+  async function updateStatus(id, newStatus) {
+    const { error } = await supabase
+      .from('leave_requests')
+      .update({ status: newStatus })
+      .eq('id', id);
+
+    if (!error) fetchLeaves();
+  }
+
+  fetchLeaves();
+</script>
 
 </body>
 
