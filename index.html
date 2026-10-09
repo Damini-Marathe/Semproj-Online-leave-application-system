@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -205,7 +204,6 @@
 
         /* Mobile */
         @media (max-width: 600px) {
-
             header {
                 padding: 15px;
             }
@@ -235,7 +233,6 @@
                 font-size: 21px;
             }
 
-            /* Mobile College Image */
             .college-image {
                 width: 100%;
                 height: auto;
@@ -258,41 +255,6 @@
         }
     </style>
 </head>
-
-<!-- Add this in head tag -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-// 1. Paste your keys here (Get from Supabase -> Project Settings -> API)
-const SUPABASE_URL = "https://fpwcrlcqxiuuuigzwhrp.supabase.co/rest/v1/"
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZwd2NybGNxeGl1dXVpZ3p3aHJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEzNTIzODcsImV4cCI6MjEwNjkyODM4N30.D4lAeREYUL5fmDcsZPWEaLzs1HEdtvzHPJpUFeMZ8h4"
-
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-
-// 2. When student submits form
-const form = document.getElementById('leaveForm');
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  
-  const { error } = await supabaseClient
-    .from('leave_applications')
-    .insert([{
-      student_name: document.getElementById('name').value,
-      roll_no: document.getElementById('roll').value,
-      leave_reason: document.getElementById('reason').value,
-      from_date: document.getElementById('fromDate').value,
-      to_date: document.getElementById('toDate').value,
-    }])
-
-  if(error){
-    alert("Error: " + error.message)
-  } else {
-    alert("Leave Application Submitted Successfully!");
-    form.reset();
-  }
-})
-</script>
-
 <body>
 
     <!-- Header -->
@@ -305,6 +267,7 @@ form.addEventListener('submit', async (e) => {
     <nav>
         <a href="index.html">Home</a>
         <a href="student_login.html">Student Login</a>
+        <a href="apply_leave.html">Apply Leave</a>
         <a href="status_tracker.html">Track Status</a>
         <a href="admin-login.html">Admin</a>
     </nav>
@@ -314,23 +277,16 @@ form.addEventListener('submit', async (e) => {
 
         <!-- Welcome -->
         <section class="welcome">
-
             <h2>Welcome to Student Leave Application System</h2>
-
             <p>
                 This system allows students to apply for leave online
                 and easily check the status of their leave applications.
             </p>
-
-            <img src="college.jpg"
-                 alt="College Image"
-                 class="college-image">
-
+            <img src="college.jpg" alt="College Image" class="college-image">
         </section>
 
         <!-- Features -->
         <section class="features">
-
             <div class="feature-box">
                 <h3>📝 Apply Leave</h3>
                 <p>
@@ -354,57 +310,39 @@ form.addEventListener('submit', async (e) => {
                     reject student leave requests.
                 </p>
             </div>
-
         </section>
 
         <!-- How It Works -->
         <section class="how-it-works">
-
             <h2>How It Works</h2>
-
             <ol>
-                <li>Student Login</li>
+                <li>Student Login or Direct Apply</li>
                 <li>Fill the Leave Application Form</li>
-                <li>Submit the Leave Application</li>
-                <li>Admin Reviews the Application</li>
-                <li>Student Checks Leave Status</li>
+                <li>Submit the Leave Application to Cloud Database</li>
+                <li>Admin Reviews and Approves/Rejects the Application</li>
+                <li>Student Checks Leave Status Using PRN</li>
             </ol>
-
         </section>
 
         <!-- Quick Access Buttons -->
         <div class="buttons">
-
-            <a href="student_login.html" class="btn">
-                Student Login
-            </a>
-
-            <a href="admin-login.html" class="btn">
-                Admin login
-            </a>
-
+            <a href="student_login.html" class="btn">Student Login</a>
+            <a href="admin-login.html" class="btn">Admin Login</a>
         </div>
 
         <!-- Important Notice -->
         <section class="notice">
-
             <h3>📢 Important Notice</h3>
-
             <marquee>
-                Students are requested to submit their leave applications
-                before the required deadline.
+                Students are requested to submit their leave applications before the required deadline.
             </marquee>
-
         </section>
 
         <!-- Contact -->
         <section class="contact">
-
             <h2>Contact Us</h2>
-
             <p>Email: rcpitcollege@gmail.com</p>
             <p>Phone: +91 1800232425</p>
-
         </section>
 
     </div>
@@ -413,11 +351,9 @@ form.addEventListener('submit', async (e) => {
     <footer>
         <p>© 2026 Student Leave Application System</p>
     </footer>
-<!-- Supabase Library -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<!-- Your Connection Script -->
-<script src="supabase.js"></script>
 
+    <!-- Supabase Library & Config -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
 </body>
 </html>
-```

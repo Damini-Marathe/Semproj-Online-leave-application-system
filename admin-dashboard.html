@@ -1,18 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Admin Dashboard</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Student Leave Management System</title>
 
     <style>
-
         * {
             margin: 0;
             padding: 0;
@@ -20,988 +13,542 @@
             font-family: Arial, sans-serif;
         }
 
-
         body {
             background: #f4f6f9;
         }
 
-
         /* SIDEBAR */
-
         .sidebar {
-
             position: fixed;
-
             width: 240px;
-
             height: 100vh;
-
             background: #1e293b;
-
             padding: 25px 15px;
-
             color: white;
-
+            z-index: 100;
         }
-
 
         .sidebar h2 {
-
             text-align: center;
-
             margin-bottom: 30px;
-
+            font-size: 20px;
         }
-
 
         .sidebar a {
-
             display: block;
-
-            padding: 14px;
-
+            padding: 12px 16px;
             margin: 7px 0;
-
-            color: white;
-
+            color: #cbd5e1;
             text-decoration: none;
-
             border-radius: 7px;
-
+            font-size: 15px;
+            transition: 0.2s;
         }
-
 
         .sidebar a:hover {
-
             background: #334155;
-
+            color: white;
         }
-
 
         .sidebar .active {
-
             background: #2563eb;
-
+            color: white;
+            font-weight: bold;
         }
-
 
         .logout {
-
-            background: #dc2626;
-
-            margin-top: 25px !important;
-
+            background: #dc2626 !important;
+            color: white !important;
+            margin-top: 35px !important;
         }
 
+        .logout:hover {
+            background: #b91c1c !important;
+        }
 
         /* MAIN */
-
         .main {
-
             margin-left: 240px;
-
             padding: 25px;
-
         }
-
 
         .topbar {
-
             background: white;
-
-            padding: 20px;
-
+            padding: 20px 25px;
             border-radius: 10px;
-
             display: flex;
-
             justify-content: space-between;
-
+            align-items: center;
             margin-bottom: 25px;
-
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
+        .topbar h1 {
+            font-size: 24px;
+            color: #1e293b;
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-refresh {
+            padding: 8px 15px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .btn-refresh:hover {
+            background: #1d4ed8;
+        }
 
         /* CARDS */
-
         .cards {
-
             display: grid;
-
-            grid-template-columns:
-            repeat(4, 1fr);
-
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
-
+            margin-bottom: 30px;
         }
-
 
         .card {
-
             background: white;
-
-            padding: 25px;
-
+            padding: 22px;
             border-radius: 10px;
-
-            box-shadow:
-            0 2px 8px #ddd;
-
+            box-shadow: 0 2px 8px #ddd;
         }
-
 
         .card h3 {
-
             color: #64748b;
-
+            font-size: 14px;
             margin-bottom: 10px;
-
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-
 
         .card p {
-
-            font-size: 30px;
-
+            font-size: 32px;
             font-weight: bold;
-
             color: #2563eb;
-
         }
 
+        .card.card-pending p {
+            color: #d97706;
+        }
+
+        .card.card-approved p {
+            color: #16a34a;
+        }
 
         /* TABLE */
-
         .table-box {
-
             background: white;
-
-            margin-top: 30px;
-
             padding: 25px;
-
             border-radius: 10px;
-
+            box-shadow: 0 2px 8px #ddd;
             overflow-x: auto;
-
         }
 
-
-        .table-box h2 {
-
+        .table-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
-
         }
 
+        .table-header-row h2 {
+            font-size: 20px;
+            color: #1e293b;
+        }
 
         table {
-
             width: 100%;
-
             border-collapse: collapse;
-
         }
 
-
-        th,
-        td {
-
-            padding: 12px;
-
-            border-bottom:
-            1px solid #ddd;
-
+        th, td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e2e8f0;
             text-align: center;
-
+            font-size: 14px;
         }
-
 
         th {
-
             background: #1e293b;
-
             color: white;
-
         }
 
-
-        /* STATUS */
-
+        /* STATUS BADGES */
         .status {
-
-            padding: 6px 10px;
-
+            padding: 5px 12px;
             border-radius: 20px;
-
             font-weight: bold;
-
+            font-size: 12px;
+            display: inline-block;
         }
 
-
-        .pending {
-
+        .status-pending {
             background: #fef3c7;
-
             color: #92400e;
-
         }
 
-
-        .approved {
-
+        .status-approved {
             background: #dcfce7;
-
             color: #166534;
-
         }
 
-
-        .rejected {
-
+        .status-rejected {
             background: #fee2e2;
-
             color: #991b1b;
-
         }
-
 
         /* BUTTONS */
-
-        button {
-
-            padding: 7px 12px;
-
+        .btn-action {
+            padding: 6px 12px;
             border: none;
-
             border-radius: 5px;
-
             color: white;
-
             cursor: pointer;
-
             margin: 2px;
-
+            font-size: 12px;
+            font-weight: bold;
         }
 
-
-        .approve {
-
+        .btn-approve {
             background: #16a34a;
-
         }
 
+        .btn-approve:hover {
+            background: #15803d;
+        }
 
-        .reject {
-
+        .btn-reject {
             background: #dc2626;
-
         }
 
-
-        button:hover {
-
-            opacity: 0.8;
-
+        .btn-reject:hover {
+            background: #b91c1c;
         }
-
-
-        /* MESSAGE */
 
         .empty {
-
             text-align: center;
-
-            padding: 30px;
-
+            padding: 40px;
             color: #64748b;
-
-            font-size: 18px;
-
+            font-size: 16px;
         }
-
 
         /* MOBILE */
-
         @media(max-width: 900px) {
-
             .cards {
-
-                grid-template-columns:
-                repeat(2, 1fr);
-
+                grid-template-columns: repeat(2, 1fr);
             }
-
         }
-
 
         @media(max-width: 600px) {
-
             .sidebar {
-
                 width: 70px;
-
+                padding: 15px 5px;
             }
-
 
             .sidebar h2 {
-
                 display: none;
-
             }
-
 
             .sidebar a {
-
-                font-size: 0;
-
+                font-size: 12px;
                 text-align: center;
-
+                padding: 10px 5px;
             }
-
 
             .main {
-
                 margin-left: 70px;
-
+                padding: 15px;
             }
-
 
             .cards {
-
                 grid-template-columns: 1fr;
-
             }
-
         }
-
     </style>
-
 </head>
-
 
 <body>
 
-    
-
     <!-- SIDEBAR -->
-
     <div class="sidebar">
-
-        <h2>
-            Admin Panel
-        </h2>
-
-
-        <a href="admin-dashboard.html"
-           class="active">
-
-            🏠 Dashboard
-
-        </a>
-
-
-        <a href="leave-applications.html">
-
-            📄 Leave Applications
-
-        </a>
-
-
-        <a href="students.html">
-
-            👨‍🎓 Students
-
-        </a>
-
-
-        <a href="leave-history.html">
-
-            📋 Leave History
-
-        </a>
-
-
-        <a href="notifications.html">
-
-            🔔 Notifications
-
-        </a>
-
-
-        <a href="admin-profile.html">
-
-            👤 Profile
-
-        </a>
-
-
-        <a href="login.html"
-           class="logout">
-
-            🚪 Logout
-
-        </a>
-
+        <h2>Admin Panel</h2>
+        <a href="admin-dashboard.html" class="active">🏠 Dashboard</a>
+        <a href="apply_leave.html">📝 Apply Leave</a>
+        <a href="status_tracker.html">📊 Track Status</a>
+        <a href="student_login.html">👨‍🎓 Student Portal</a>
+        <a href="index.html">🌐 Main Home</a>
+        <a href="admin-login.html" class="logout" onclick="logoutAdmin()">🚪 Logout</a>
     </div>
-
-
 
     <!-- MAIN -->
-
     <div class="main">
-
-
         <!-- TOP BAR -->
-
         <div class="topbar">
-
-            <h1>
-                Admin Dashboard
-            </h1>
-
-
-            <span>
-
-                Welcome,
-                <b>Admin</b> 👋
-
-            </span>
-
+            <h1>Admin Dashboard</h1>
+            <div class="topbar-actions">
+                <button class="btn-refresh" onclick="loadApplications()">🔄 Refresh Data</button>
+                <span id="adminWelcome">Welcome, <b>Admin</b> 👋</span>
+            </div>
         </div>
-
-
 
         <!-- CARDS -->
-
         <div class="cards">
-
-
             <div class="card">
-
-                <h3>
-                    Total Students
-                </h3>
-
-                <p id="totalStudents">
-                    0
-                </p>
-
+                <h3>Total Students</h3>
+                <p id="totalStudents">0</p>
             </div>
 
-
-
             <div class="card">
-
-                <h3>
-                    Total Applications
-                </h3>
-
-                <p id="totalApplications">
-                    0
-                </p>
-
+                <h3>Total Applications</h3>
+                <p id="totalApplications">0</p>
             </div>
 
-
-
-            <div class="card">
-
-                <h3>
-                    Pending
-                </h3>
-
-                <p id="pendingApplications">
-                    0
-                </p>
-
+            <div class="card card-pending">
+                <h3>Pending</h3>
+                <p id="pendingApplications">0</p>
             </div>
 
-
-
-            <div class="card">
-
-                <h3>
-                    Approved
-                </h3>
-
-                <p id="approvedApplications">
-                    0
-                </p>
-
+            <div class="card card-approved">
+                <h3>Approved</h3>
+                <p id="approvedApplications">0</p>
             </div>
-
         </div>
-
-
 
         <!-- APPLICATION TABLE -->
-
         <div class="table-box">
-
-
-            <h2>
-                Leave Applications
-            </h2>
-
-
-            <table>
-
-
-                <thead>
-
-                    <tr>
-
-                        <th>
-                            ID
-                        </th>
-
-                        <th>
-                            Student
-                        </th>
-
-                        <th>
-                            PRN
-                        </th>
-
-                        <th>
-                            Department
-                        </th>
-
-                        <th>
-                            Leave Type
-                        </th>
-
-                        <th>
-                            From
-                        </th>
-
-                        <th>
-                            To
-                        </th>
-
-                        <th>
-                            Reason
-                        </th>
-
-                        <th>
-                            Status
-                        </th>
-
-                        <th>
-                            Action
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody id="leaveTable">
-
-                </tbody>
-
-
-            </table>
-
-
-            <div
-                id="emptyMessage"
-                class="empty"
-                style="display:none;">
-
-                No leave applications found.
-
+            <div class="table-header-row">
+                <h2>All Leave Applications</h2>
+                <small id="sourceIndicator" style="color: #64748b;">Connected to Cloud Database</small>
             </div>
 
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Student</th>
+                        <th>PRN</th>
+                        <th>Department</th>
+                        <th>Leave Type</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="leaveTable"></tbody>
+            </table>
 
+            <div id="emptyMessage" class="empty" style="display:none;">
+                No leave applications found in the database.
+            </div>
         </div>
-
     </div>
 
-
+    <!-- Supabase Library & Config -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
 
     <script>
+        let allApplications = [];
 
+        function logoutAdmin() {
+            sessionStorage.removeItem("adminUser");
+            window.location.href = "admin-login.html";
+        }
 
-        /* LOAD APPLICATIONS */
+        async function loadApplications() {
+            const table = document.getElementById("leaveTable");
+            const emptyMessage = document.getElementById("emptyMessage");
+            const sourceIndicator = document.getElementById("sourceIndicator");
 
-        function loadApplications() {
+            table.innerHTML = `<tr><td colspan="10" style="padding: 20px;">Loading applications...</td></tr>`;
+            emptyMessage.style.display = "none";
 
+            let apps = [];
+            let loadedFromCloud = false;
 
-            let applications =
+            // 1. Fetch from Supabase
+            if (window.supabaseClient) {
+                try {
+                    const { data, error } = await supabaseClient
+                        .from("leave_applications")
+                        .select("*")
+                        .order("created_at", { ascending: false });
 
-                JSON.parse(
+                    if (!error && Array.isArray(data)) {
+                        apps = data;
+                        loadedFromCloud = true;
+                    } else if (error) {
+                        console.warn("Supabase query error:", error);
+                    }
+                } catch (err) {
+                    console.error("Supabase network error:", err);
+                }
+            }
 
-                    localStorage
-                    .getItem("leaveApplications")
+            // 2. Fallback to LocalStorage if cloud returned nothing
+            if (apps.length === 0) {
+                try {
+                    const localApps = JSON.parse(localStorage.getItem("leaveApplications")) || [];
+                    apps = localApps.map((a, idx) => ({
+                        id: idx + 1,
+                        student_name: a.studentName,
+                        prn: a.prn,
+                        department: a.department,
+                        leave_type: a.leaveType,
+                        from_date: a.fromDate,
+                        to_date: a.toDate,
+                        reason: a.reason,
+                        status: a.status || "Pending",
+                        isLocal: true,
+                        localIndex: idx
+                    }));
+                } catch (e) {}
+            }
 
-                ) || [];
+            allApplications = apps;
+            sourceIndicator.innerText = loadedFromCloud
+                ? "🟢 Connected to Supabase Cloud"
+                : "🟠 Showing Local Backup Data";
 
+            renderTable(apps);
+            updateDashboardMetrics(apps);
+        }
 
-
-            let table =
-
-                document
-                .getElementById("leaveTable");
-
-
-
+        function renderTable(apps) {
+            const table = document.getElementById("leaveTable");
+            const emptyMessage = document.getElementById("emptyMessage");
             table.innerHTML = "";
 
-
-
-            if (applications.length === 0) {
-
-                document
-                .getElementById("emptyMessage")
-                .style.display = "block";
-
+            if (!apps || apps.length === 0) {
+                emptyMessage.style.display = "block";
+                return;
             }
 
-            else {
-
-                document
-                .getElementById("emptyMessage")
-                .style.display = "none";
-
-            }
-
-
-
-            let pending = 0;
-
-            let approved = 0;
-
-
-
-            /* REMOVE DUPLICATE PRNs */
-
-            let uniquePRNs =
-
-                new Set();
-
-
-
-            applications.forEach(
-
-                function(application, index) {
-
-
-                    uniquePRNs.add(
-                        application.prn
-                    );
-
-
-
-                    if (
-                        application.status
-                        === "Pending"
-                    ) {
-
-                        pending++;
-
-                    }
-
-
-
-                    if (
-                        application.status
-                        === "Approved"
-                    ) {
-
-                        approved++;
-
-                    }
-
-
-
-                    let applicationId =
-
-                        "LA" +
-
-                        String(index + 1)
-                        .padStart(3, "0");
-
-
-
-                    let statusClass =
-
-                        application.status
-                        .toLowerCase();
-
-
-
-                    let action = "";
-
-
-
-                    if (
-                        application.status
-                        === "Pending"
-                    ) {
-
-
-                        action = `
-
-                            <button
-                                class="approve"
-                                onclick="approveLeave(${index})">
-
-                                Approve
-
-                            </button>
-
-
-                            <button
-                                class="reject"
-                                onclick="rejectLeave(${index})">
-
-                                Reject
-
-                            </button>
-
-                        `;
-
-                    }
-
-                    else {
-
-
-                        action =
-                            "<b>Completed</b>";
-
-                    }
-
-
-
-                    table.innerHTML += `
-
-                        <tr>
-
-                            <td>
-                                ${applicationId}
-                            </td>
-
-                            <td>
-                                ${application.studentName}
-                            </td>
-
-                            <td>
-                                ${application.prn}
-                            </td>
-
-                            <td>
-                                ${application.department}
-                            </td>
-
-                            <td>
-                                ${application.leaveType}
-                            </td>
-
-                            <td>
-                                ${application.fromDate}
-                            </td>
-
-                            <td>
-                                ${application.toDate}
-                            </td>
-
-                            <td>
-                                ${application.reason}
-                            </td>
-
-                            <td>
-
-                                <span
-                                    class="status
-                                    ${statusClass}">
-
-                                    ${application.status}
-
-                                </span>
-
-                            </td>
-
-                            <td>
-
-                                ${action}
-
-                            </td>
-
-                        </tr>
-
+            emptyMessage.style.display = "none";
+
+            apps.forEach((app, index) => {
+                const statusStr = app.status || "Pending";
+                const statusClass = statusStr.toLowerCase();
+                const displayId = app.id ? `LA${String(app.id).padStart(3, "0")}` : `LA${String(index + 1).padStart(3, "0")}`;
+
+                let actionHtml = "";
+                if (statusStr === "Pending") {
+                    actionHtml = `
+                        <button class="btn-action btn-approve" onclick="updateStatus(${app.id}, 'Approved', ${app.isLocal ? app.localIndex : -1})">
+                            Approve
+                        </button>
+                        <button class="btn-action btn-reject" onclick="updateStatus(${app.id}, 'Rejected', ${app.isLocal ? app.localIndex : -1})">
+                            Reject
+                        </button>
                     `;
-
-
+                } else {
+                    actionHtml = `
+                        <button class="btn-action btn-approve" style="opacity: 0.6;" onclick="updateStatus(${app.id}, 'Approved', ${app.isLocal ? app.localIndex : -1})">
+                            Approve
+                        </button>
+                        <button class="btn-action btn-reject" style="opacity: 0.6;" onclick="updateStatus(${app.id}, 'Rejected', ${app.isLocal ? app.localIndex : -1})">
+                            Reject
+                        </button>
+                    `;
                 }
 
-            );
-
-
-
-            /* UPDATE CARDS */
-
-
-            document
-            .getElementById("totalApplications")
-            .innerText =
-                applications.length;
-
-
-
-            document
-            .getElementById("pendingApplications")
-            .innerText =
-                pending;
-
-
-
-            document
-            .getElementById("approvedApplications")
-            .innerText =
-                approved;
-
-
-
-            document
-            .getElementById("totalStudents")
-            .innerText =
-                uniquePRNs.size;
-
+                table.innerHTML += `
+                    <tr>
+                        <td><b>${displayId}</b></td>
+                        <td>${app.student_name || "N/A"}</td>
+                        <td>${app.prn || "N/A"}</td>
+                        <td>${app.department || "N/A"}</td>
+                        <td>${app.leave_type || "N/A"}</td>
+                        <td>${app.from_date || "N/A"}</td>
+                        <td>${app.to_date || "N/A"}</td>
+                        <td title="${app.reason || ''}">${(app.reason || "").substring(0, 30)}${(app.reason || "").length > 30 ? "..." : ""}</td>
+                        <td><span class="status status-${statusClass}">${statusStr}</span></td>
+                        <td>${actionHtml}</td>
+                    </tr>
+                `;
+            });
         }
 
+        function updateDashboardMetrics(apps) {
+            let pendingCount = 0;
+            let approvedCount = 0;
+            const uniquePRNs = new Set();
 
+            apps.forEach(app => {
+                if (app.prn) uniquePRNs.add(app.prn);
+                if (app.status === "Pending") pendingCount++;
+                if (app.status === "Approved") approvedCount++;
+            });
 
-        /* APPROVE */
+            document.getElementById("totalApplications").innerText = apps.length;
+            document.getElementById("pendingApplications").innerText = pendingCount;
+            document.getElementById("approvedApplications").innerText = approvedCount;
+            document.getElementById("totalStudents").innerText = uniquePRNs.size;
+        }
 
+        async function updateStatus(recordId, newStatus, localIndex) {
+            // 1. Update in Supabase
+            if (window.supabaseClient && recordId && localIndex === -1) {
+                try {
+                    const { error } = await supabaseClient
+                        .from("leave_applications")
+                        .update({ status: newStatus })
+                        .eq("id", recordId);
 
-        function approveLeave(index) {
+                    if (error) {
+                        alert("Could not update status on Supabase: " + error.message);
+                    }
+                } catch (err) {
+                    console.error("Status update error:", err);
+                }
+            }
 
+            // 2. Also update in LocalStorage if present
+            try {
+                let localApps = JSON.parse(localStorage.getItem("leaveApplications")) || [];
+                if (localIndex >= 0 && localApps[localIndex]) {
+                    localApps[localIndex].status = newStatus;
+                } else {
+                    // Match by ID or PRN if possible
+                    localApps.forEach(item => {
+                        if (item.id === recordId) item.status = newStatus;
+                    });
+                }
+                localStorage.setItem("leaveApplications", JSON.stringify(localApps));
+            } catch (e) {}
 
-            let applications =
+            // Reload immediately
+            loadApplications();
+        }
 
-                JSON.parse(
-
-                    localStorage
-                    .getItem("leaveApplications")
-
-                ) || [];
-
-
-
-            applications[index].status =
-                "Approved";
-
-
-
-            localStorage.setItem(
-
-                "leaveApplications",
-
-                JSON.stringify(applications)
-
-            );
-
-
+        // Auto-load on page startup
+        window.addEventListener("DOMContentLoaded", () => {
+            // Load admin greeting if saved in session
+            try {
+                const adminUser = sessionStorage.getItem("adminUser");
+                if (adminUser) {
+                    const parsed = JSON.parse(adminUser);
+                    if (parsed.full_name) {
+                        document.getElementById("adminWelcome").innerHTML = `Welcome, <b>${parsed.full_name}</b> 👋`;
+                    }
+                }
+            } catch (e) {}
 
             loadApplications();
-
-
-        }
-
-
-
-        /* REJECT */
-
-
-        function rejectLeave(index) {
-
-
-            let applications =
-
-                JSON.parse(
-
-                    localStorage
-                    .getItem("leaveApplications")
-
-                ) || [];
-
-
-
-            applications[index].status =
-                "Rejected";
-
-
-
-            localStorage.setItem(
-
-                "leaveApplications",
-
-                JSON.stringify(applications)
-
-            );
-
-
-
-            loadApplications();
-
-
-        }
-
-
-
-        /* LOAD WHEN PAGE OPENS */
-
-
-        loadApplications();
-
-
-
+        });
     </script>
-<!-- Supabase Library -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<!-- Your Connection Script -->
-<script src="supabase.js"></script>
-<script>
-  async function fetchLeaves() {
-    const { data: requests, error } = await supabase
-      .from('leave_requests')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    if (error) return console.error(error);
-
-    const tableBody = document.getElementById("leaveRequestsTableBody");
-    tableBody.innerHTML = "";
-
-    requests.forEach((req) => {
-      tableBody.innerHTML += `
-        <tr>
-          <td>${req.student_name}</td>
-          <td>${req.reason}</td>
-          <td>${req.start_date} to ${req.end_date}</td>
-          <td>${req.status}</td>
-          <td>
-            <button onclick="updateStatus(${req.id}, 'Approved')">Approve</button>
-            <button onclick="updateStatus(${req.id}, 'Rejected')">Reject</button>
-          </td>
-        </tr>
-      `;
-    });
-  }
-
-  async function updateStatus(id, newStatus) {
-    const { error } = await supabase
-      .from('leave_requests')
-      .update({ status: newStatus })
-      .eq('id', id);
-
-    if (!error) fetchLeaves();
-  }
-
-  fetchLeaves();
-</script>
-
 </body>
-
 </html>
