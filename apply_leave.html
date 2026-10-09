@@ -646,7 +646,41 @@
         );
 
     </script>
+<!-- Supabase Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Your Connection Script -->
+<script src="supabase.js"></script>
+<script>
+  const leaveForm = document.querySelector('form');
 
+  leaveForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const studentName = document.getElementById('studentName').value;
+    const reason = document.getElementById('reason').value;
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+
+    const { data, error } = await supabase
+      .from('leave_requests')
+      .insert([
+        { 
+          student_name: studentName, 
+          reason: reason, 
+          start_date: startDate, 
+          end_date: endDate,
+          status: 'Pending'
+        }
+      ]);
+
+    if (error) {
+      alert("Error saving: " + error.message);
+    } else {
+      alert("Leave application submitted permanently!");
+      leaveForm.reset();
+    }
+  });
+</script>
 </body>
 
 </html>
