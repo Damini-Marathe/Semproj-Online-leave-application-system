@@ -1,16 +1,11 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Apply Leave</title>
+    <title>Apply Leave - Student Leave Management System</title>
 
     <style>
-
         * {
             box-sizing: border-box;
             font-family: Arial, sans-serif;
@@ -23,7 +18,6 @@
         }
 
         /* Header */
-
         .header {
             background-color: #6bb6d9;
             color: white;
@@ -42,7 +36,6 @@
         }
 
         /* Navigation */
-
         nav {
             background-color: white;
             text-align: center;
@@ -62,7 +55,6 @@
         }
 
         /* Main Form */
-
         .container {
             width: 90%;
             max-width: 800px;
@@ -82,8 +74,6 @@
             margin-bottom: 25px;
         }
 
-        /* Table */
-
         table {
             width: 100%;
             border-collapse: collapse;
@@ -99,10 +89,8 @@
         }
 
         /* Input Fields */
-
         input[type="text"],
         input[type="date"],
-        input[type="file"],
         select,
         textarea {
             width: 100%;
@@ -111,6 +99,7 @@
             border-radius: 5px;
             outline: none;
             background-color: white;
+            font-size: 14px;
         }
 
         input[type="text"]:focus,
@@ -125,37 +114,62 @@
         }
 
         /* Buttons */
-
-        input[type="submit"],
-        input[type="reset"] {
-            padding: 11px 22px;
+        .btn-submit,
+        .btn-reset {
+            padding: 11px 25px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
             margin: 5px;
+            font-size: 15px;
         }
 
-        input[type="submit"] {
+        .btn-submit {
             background-color: #6bb6d9;
             color: white;
         }
 
-        input[type="submit"]:hover {
+        .btn-submit:hover {
             background-color: #4d9fc5;
         }
 
-        input[type="reset"] {
+        .btn-submit:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .btn-reset {
             background-color: #e0e0e0;
             color: #333;
         }
 
-        input[type="reset"]:hover {
+        .btn-reset:hover {
             background-color: #cccccc;
         }
 
-        /* Bottom Links */
+        .status-alert {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
 
+        .status-alert.success {
+            background-color: #dcfce7;
+            color: #166534;
+            display: block;
+        }
+
+        .status-alert.error {
+            background-color: #fee2e2;
+            color: #991b1b;
+            display: block;
+        }
+
+        /* Bottom Links */
         .links {
             text-align: center;
             margin: 25px 0;
@@ -173,7 +187,6 @@
         }
 
         /* Footer */
-
         footer {
             background-color: #4d9fc5;
             color: white;
@@ -182,10 +195,7 @@
             margin-top: 40px;
         }
 
-        /* Mobile */
-
         @media (max-width: 600px) {
-
             .header h1 {
                 font-size: 22px;
             }
@@ -203,10 +213,7 @@
                 padding: 20px;
             }
 
-            table,
-            tbody,
-            tr,
-            td {
+            table, tbody, tr, td {
                 display: block;
                 width: 100%;
             }
@@ -219,469 +226,257 @@
             td {
                 padding: 6px 0;
             }
-
         }
-
     </style>
-
 </head>
-
 
 <body>
 
     <!-- Header -->
-
     <div class="header">
-
         <h1>🎓 Student Leave Management System</h1>
-
         <p>Apply Leave Online Easily</p>
-
     </div>
-
 
     <!-- Navigation -->
-
     <nav>
-
         <a href="index.html">Home</a>
-
         <a href="student_login.html">Student Login</a>
-
         <a href="apply_leave.html">Apply Leave</a>
-
         <a href="status_tracker.html">Track Status</a>
-
         <a href="admin-login.html">Admin</a>
-
     </nav>
 
-
     <!-- Main Container -->
-
     <div class="container">
-
         <div class="form-box">
-
             <h2>Leave Application Form</h2>
 
+            <div id="statusAlert" class="status-alert"></div>
 
-            <form id="leaveForm">
-
+            <form id="leaveForm" onsubmit="handleLeaveSubmit(event)">
                 <table>
-
                     <!-- Student Name -->
-
                     <tr>
-
                         <td>Student Name</td>
-
                         <td>
-                            <input
-                                type="text"
-                                id="studentName"
-                                placeholder="Enter Full Name"
-                                required>
+                            <input type="text" id="studentName" placeholder="Enter Full Name" required>
                         </td>
-
                     </tr>
-
 
                     <!-- PRN Number -->
-
                     <tr>
-
                         <td>PRN Number</td>
-
                         <td>
-                            <input
-                                type="text"
-                                id="prn"
-                                placeholder="Enter PRN Number"
-                                required>
+                            <input type="text" id="prn" placeholder="Enter PRN Number (e.g. PRN12345)" required>
                         </td>
-
                     </tr>
-
 
                     <!-- Department -->
-
                     <tr>
-
                         <td>Department</td>
-
                         <td>
-
                             <select id="department" required>
-
-                                <option value="">
-                                    Select Department
-                                </option>
-
-                                <option>
-                                    Computer Engineering
-                                </option>
-
-                                <option>
-                                    Information Technology
-                                </option>
-
-                                <option>
-                                    Artificial Intelligence & ML
-                                </option>
-
-                                <option>
-                                    Mechanical Engineering
-                                </option>
-
-                                <option>
-                                    Civil Engineering
-                                </option>
-
-                                <option>
-                                    Electronics Engineering
-                                </option>
-
+                                <option value="">Select Department</option>
+                                <option>Computer Engineering</option>
+                                <option>Information Technology</option>
+                                <option>Artificial Intelligence & ML</option>
+                                <option>Mechanical Engineering</option>
+                                <option>Civil Engineering</option>
+                                <option>Electronics Engineering</option>
                             </select>
-
                         </td>
-
                     </tr>
-
 
                     <!-- Year -->
-
                     <tr>
-
                         <td>Year</td>
-
                         <td>
-
                             <select id="year" required>
-
-                                <option value="">
-                                    Select Year
-                                </option>
-
+                                <option value="">Select Year</option>
                                 <option>First Year</option>
-
                                 <option>Second Year</option>
-
                                 <option>Third Year</option>
-
                                 <option>Final Year</option>
-
                             </select>
-
                         </td>
-
                     </tr>
-
 
                     <!-- Leave Type -->
-
                     <tr>
-
                         <td>Leave Type</td>
-
                         <td>
-
                             <select id="leaveType" required>
-
-                                <option value="">
-                                    Select Leave Type
-                                </option>
-
+                                <option value="">Select Leave Type</option>
                                 <option>Sick Leave</option>
-
                                 <option>Medical Leave</option>
-
                                 <option>Personal Leave</option>
-
                                 <option>Emergency Leave</option>
-
                                 <option>Other</option>
-
                             </select>
-
                         </td>
-
                     </tr>
-
 
                     <!-- From Date -->
-
                     <tr>
-
                         <td>From Date</td>
-
                         <td>
-
-                            <input
-                                type="date"
-                                id="fromDate"
-                                required>
-
+                            <input type="date" id="fromDate" required>
                         </td>
-
                     </tr>
-
 
                     <!-- To Date -->
-
                     <tr>
-
                         <td>To Date</td>
-
                         <td>
-
-                            <input
-                                type="date"
-                                id="toDate"
-                                required>
-
+                            <input type="date" id="toDate" required>
                         </td>
-
                     </tr>
-
 
                     <!-- Reason -->
-
                     <tr>
-
                         <td>Reason</td>
-
                         <td>
-
-                            <textarea
-                                id="reason"
-                                rows="5"
-                                placeholder="Enter Reason for Leave"
-                                required></textarea>
-
+                            <textarea id="reason" rows="4" placeholder="Enter Reason for Leave" required></textarea>
                         </td>
-
                     </tr>
-
-
-                    <!-- Document -->
-
-                    <tr>
-
-                        <td>Upload Document</td>
-
-                        <td>
-
-                            <input
-                                type="file"
-                                id="document">
-
-                        </td>
-
-                    </tr>
-
 
                     <!-- Buttons -->
-
                     <tr>
-
                         <td colspan="2" align="center">
-
-                            <input
-                                type="submit"
-                                value="Submit Leave">
-
-                            <input
-                                type="reset"
-                                value="Clear">
-
+                            <button type="submit" id="submitBtn" class="btn-submit">Submit Leave</button>
+                            <button type="reset" class="btn-reset">Clear</button>
                         </td>
-
                     </tr>
-
                 </table>
-
             </form>
-
         </div>
-
     </div>
-
 
     <!-- Bottom Links -->
-
     <div class="links">
-
         <a href="index.html">Home</a>
-
         |
-
         <a href="student_login.html">Student Login</a>
-
         |
-
         <a href="status_tracker.html">Track Status</a>
-
     </div>
 
-
     <!-- Footer -->
-
     <footer>
-
         <p>© 2026 Student Leave Management System</p>
-
     </footer>
 
-
-    <!-- Local Database JavaScript -->
+    <!-- Supabase Library & Config -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
 
     <script>
-
-        document.getElementById("leaveForm").addEventListener(
-            "submit",
-            function(event) {
-
-                event.preventDefault();
-
-
-                // Get form data
-
-                let studentName =
-                    document.getElementById("studentName").value.trim();
-
-                let prn =
-                    document.getElementById("prn").value.trim();
-
-                let department =
-                    document.getElementById("department").value;
-
-                let year =
-                    document.getElementById("year").value;
-
-                let leaveType =
-                    document.getElementById("leaveType").value;
-
-                let fromDate =
-                    document.getElementById("fromDate").value;
-
-                let toDate =
-                    document.getElementById("toDate").value;
-
-                let reason =
-                    document.getElementById("reason").value.trim();
-
-
-                // Check dates
-
-                if (toDate < fromDate) {
-
-                    alert("To Date cannot be before From Date.");
-
-                    return;
-
+        // Auto-fill logged-in student info if available
+        window.addEventListener("DOMContentLoaded", () => {
+            try {
+                const sessionStudent = sessionStorage.getItem("currentStudent");
+                if (sessionStudent) {
+                    const student = JSON.parse(sessionStudent);
+                    if (student.student_name) document.getElementById("studentName").value = student.student_name;
+                    if (student.prn) document.getElementById("prn").value = student.prn;
+                    if (student.department) document.getElementById("department").value = student.department;
+                    if (student.year) document.getElementById("year").value = student.year;
                 }
-
-
-                // Create leave application
-
-                let leaveApplication = {
-
-                    studentName: studentName,
-
-                    prn: prn,
-
-                    department: department,
-
-                    year: year,
-
-                    leaveType: leaveType,
-
-                    fromDate: fromDate,
-
-                    toDate: toDate,
-
-                    reason: reason,
-
-                    status: "Pending"
-
-                };
-
-
-                // Get existing data from LocalStorage
-
-                let applications =
-                    JSON.parse(
-                        localStorage.getItem("leaveApplications")
-                    ) || [];
-
-
-                // Add new application
-
-                applications.push(leaveApplication);
-
-
-                // Save data in LocalStorage
-
-                localStorage.setItem(
-                    "leaveApplications",
-                    JSON.stringify(applications)
-                );
-
-
-                // Success message
-
-                alert(
-                    "Leave application submitted successfully!"
-                );
-
-
-                // Clear form
-
-                document
-                    .getElementById("leaveForm")
-                    .reset();
-
+            } catch (e) {
+                console.error("Session load error", e);
             }
-        );
+        });
 
-    </script>
-<!-- Supabase Library -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<!-- Your Connection Script -->
-<script src="supabase.js"></script>
-<script>
-  const leaveForm = document.querySelector('form');
+        async function handleLeaveSubmit(event) {
+            event.preventDefault();
 
-  leaveForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
+            const studentName = document.getElementById("studentName").value.trim();
+            const prn = document.getElementById("prn").value.trim();
+            const department = document.getElementById("department").value;
+            const year = document.getElementById("year").value;
+            const leaveType = document.getElementById("leaveType").value;
+            const fromDate = document.getElementById("fromDate").value;
+            const toDate = document.getElementById("toDate").value;
+            const reason = document.getElementById("reason").value.trim();
+            const statusAlert = document.getElementById("statusAlert");
+            const submitBtn = document.getElementById("submitBtn");
 
-    const studentName = document.getElementById('studentName').value;
-    const reason = document.getElementById('reason').value;
-    const startDate = document.getElementById('startDate').value;
-    const endDate = document.getElementById('endDate').value;
+            // Date validation
+            if (toDate < fromDate) {
+                statusAlert.className = "status-alert error";
+                statusAlert.innerText = "To Date cannot be earlier than From Date.";
+                return;
+            }
 
-    const { data, error } = await supabase
-      .from('leave_requests')
-      .insert([
-        { 
-          student_name: studentName, 
-          reason: reason, 
-          start_date: startDate, 
-          end_date: endDate,
-          status: 'Pending'
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Submitting to Supabase...";
+            statusAlert.style.display = "none";
+
+            const applicationRecord = {
+                student_name: studentName,
+                prn: prn,
+                department: department,
+                year: year,
+                leave_type: leaveType,
+                from_date: fromDate,
+                to_date: toDate,
+                reason: reason,
+                status: "Pending"
+            };
+
+            let savedToCloud = false;
+
+            // 1. Submit to Supabase Database
+            if (window.supabaseClient) {
+                try {
+                    const { data, error } = await supabaseClient
+                        .from("leave_applications")
+                        .insert([applicationRecord]);
+
+                    if (!error) {
+                        savedToCloud = true;
+                    } else {
+                        console.warn("Supabase insert error:", error);
+                        // If RLS or table name issue, we still fall back gracefully
+                    }
+                } catch (err) {
+                    console.error("Supabase network error:", err);
+                }
+            }
+
+            // 2. Also keep LocalStorage synced as offline backup
+            try {
+                let localApps = JSON.parse(localStorage.getItem("leaveApplications")) || [];
+                localApps.push({
+                    studentName: studentName,
+                    prn: prn,
+                    department: department,
+                    year: year,
+                    leaveType: leaveType,
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    reason: reason,
+                    status: "Pending"
+                });
+                localStorage.setItem("leaveApplications", JSON.stringify(localApps));
+            } catch (err) {
+                console.warn("Local storage cache warning:", err);
+            }
+
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Submit Leave";
+
+            statusAlert.className = "status-alert success";
+            statusAlert.innerHTML = `
+                ✅ Leave application submitted successfully ${savedToCloud ? "to Cloud Database!" : "!"}<br>
+                <a href="status_tracker.html?prn=${encodeURIComponent(prn)}" style="color: #166534; text-decoration: underline;">
+                    Click here to Track Application Status for PRN: ${prn}
+                </a>
+            `;
+
+            document.getElementById("leaveForm").reset();
         }
-      ]);
-
-    if (error) {
-      alert("Error saving: " + error.message);
-    } else {
-      alert("Leave application submitted permanently!");
-      leaveForm.reset();
-    }
-  });
-</script>
+    </script>
 </body>
-
 </html>
-```

@@ -1,49 +1,262 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Admin Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Leave Application System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f2faff;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background-color: #1e3a8a;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header h1 {
+            font-size: 26px;
+            margin-bottom: 6px;
+        }
+
+        nav {
+            background-color: white;
+            text-align: center;
+            padding: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #1e3a8a;
+            font-weight: bold;
+            margin: 0 12px;
+        }
+
+        nav a:hover {
+            color: #1d4ed8;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 65vh;
+            padding: 20px;
+        }
+
+        .login-box {
+            width: 400px;
+            max-width: 100%;
+            background: white;
+            padding: 35px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .login-box h2 {
+            text-align: center;
+            color: #1e3a8a;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            border-color: #1e3a8a;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        button:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .msg {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .msg-error {
+            color: #dc2626;
+        }
+
+        .msg-success {
+            color: #16a34a;
+        }
+
+        .demo-box {
+            margin-top: 20px;
+            padding: 12px;
+            background: #f1f5f9;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #475569;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+    </style>
 </head>
 
 <body>
 
-    <h2>Admin Login</h2>
+    <header>
+        <h1>🎓 Student Leave Management System</h1>
+        <p>Admin Portal</p>
+    </header>
 
-    <form onsubmit="login(event)">
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="student_login.html">Student Login</a>
+        <a href="apply_leave.html">Apply Leave</a>
+        <a href="status_tracker.html">Track Status</a>
+        <a href="admin-login.html">Admin</a>
+    </nav>
 
-        <input type="text" id="id" placeholder="Admin ID" required>
-        <br><br>
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Admin Login</h2>
 
-        <input type="password" id="pass" placeholder="Password" required>
-        <br><br>
+            <form onsubmit="handleAdminLogin(event)">
+                <div class="form-group">
+                    <label>Admin ID / Username</label>
+                    <input type="text" id="id" placeholder="Enter Admin ID" required>
+                </div>
 
-        <button type="submit">Login</button>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="pass" placeholder="Enter Password" required>
+                </div>
 
-    </form>
+                <button type="submit" id="loginBtn">Login to Dashboard</button>
+            </form>
 
-    <p id="msg"></p>
+            <p id="msg" class="msg"></p>
+
+            <div class="demo-box">
+                Default Admin: <b>rcpit</b> | Password: <b>Admin@123</b>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Student Leave Application System</p>
+    </footer>
+
+    <!-- Supabase Library & Config -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
 
     <script>
-
-        function login(event) {
-
+        async function handleAdminLogin(event) {
             event.preventDefault();
 
-            let id = document.getElementById("id").value;
-            let pass = document.getElementById("pass").value;
+            const id = document.getElementById("id").value.trim();
+            const pass = document.getElementById("pass").value;
+            const msg = document.getElementById("msg");
+            const btn = document.getElementById("loginBtn");
 
-            if (id === "rcpit" && pass === "Admin@123") {
+            btn.disabled = true;
+            btn.innerText = "Verifying...";
+            msg.innerHTML = "";
 
-                window.location.href = "./admin-dashboard.html";
+            let authenticated = false;
+            let adminData = null;
 
+            // 1. Check Supabase admins table
+            if (window.supabaseClient) {
+                try {
+                    const { data, error } = await supabaseClient
+                        .from("admins")
+                        .select("*")
+                        .eq("username", id)
+                        .eq("password", pass)
+                        .maybeSingle();
+
+                    if (!error && data) {
+                        authenticated = true;
+                        adminData = data;
+                    }
+                } catch (err) {
+                    console.warn("Supabase admin query error:", err);
+                }
+            }
+
+            // 2. Fallback check for default credentials
+            if (!authenticated && id === "rcpit" && pass === "Admin@123") {
+                authenticated = true;
+                adminData = { username: "rcpit", full_name: "RCPIT Administrator" };
+            }
+
+            if (authenticated) {
+                sessionStorage.setItem("adminUser", JSON.stringify(adminData));
+                msg.className = "msg msg-success";
+                msg.innerText = "Authentication successful! Redirecting...";
+                setTimeout(() => {
+                    window.location.href = "admin-dashboard.html";
+                }, 700);
             } else {
-
-                document.getElementById("msg").innerHTML =
-                    "Wrong Admin ID or Password";
-
+                btn.disabled = false;
+                btn.innerText = "Login to Dashboard";
+                msg.className = "msg msg-error";
+                msg.innerText = "Wrong Admin ID or Password";
             }
         }
-
     </script>
-
 </body>
 </html>

@@ -1,22 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Leave Status Tracker</title>
+    <title>Leave Status Tracker - Student Leave Application System</title>
 
     <style>
-
-        body {
+        * {
+            box-sizing: border-box;
             font-family: Arial, sans-serif;
-            background: #f4f6f9;
-            margin: 0;
         }
 
-        h1 {
-            color: #1e293b;
+        body {
+            background: #f4f6f9;
+            margin: 0;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background-color: #6bb6d9;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            margin: 0 0 8px 0;
+        }
+
+        header p {
+            margin: 0;
+            font-size: 15px;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: white;
+            text-align: center;
+            padding: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #287da5;
+            font-weight: bold;
+            margin: 0 12px;
+        }
+
+        nav a:hover {
+            color: #155d7d;
         }
 
         .container {
@@ -33,36 +68,64 @@
             margin-bottom: 25px;
         }
 
+        .search-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
         input {
-            padding: 10px;
-            width: 250px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            padding: 11px;
+            width: 300px;
+            max-width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            outline: none;
+            font-size: 15px;
+        }
+
+        input:focus {
+            border-color: #6bb6d9;
         }
 
         button {
-            padding: 10px 20px;
-            background: #2563eb;
+            padding: 11px 24px;
+            background: #6bb6d9;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
+            font-weight: bold;
+            font-size: 15px;
         }
 
         button:hover {
-            background: #1d4ed8;
+            background: #4d9fc5;
+        }
+
+        button:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 10px;
         }
 
-        th,
-        td {
+        th, td {
             padding: 12px;
-            border: 1px solid #ddd;
+            border: 1px solid #e2e8f0;
             text-align: center;
+            font-size: 14px;
         }
 
         th {
@@ -70,303 +133,250 @@
             color: white;
         }
 
-        .pending {
-            color: #d97706;
+        /* Status Badges */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 15px;
             font-weight: bold;
+            font-size: 12px;
         }
 
-        .approved {
-            color: #16a34a;
-            font-weight: bold;
+        .status-pending {
+            background-color: #fef3c7;
+            color: #92400e;
         }
 
-        .rejected {
-            color: #dc2626;
-            font-weight: bold;
+        .status-approved {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .status-rejected {
+            background-color: #fee2e2;
+            color: #991b1b;
         }
 
         .message {
             text-align: center;
             font-weight: bold;
+            margin-top: 15px;
+            font-size: 15px;
         }
 
-        a {
-            text-decoration: none;
-            color: #2563eb;
+        footer {
+            background-color: #4d9fc5;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 50px;
         }
 
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 22px;
+            }
+
+            nav a {
+                display: block;
+                margin: 8px;
+            }
+
+            input {
+                width: 100%;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
     </style>
-
 </head>
-
 
 <body>
 
-    <h1 align="center">
-        🎓 Student Leave Management System
-    </h1>
+    <header>
+        <h1>🎓 Student Leave Management System</h1>
+        <p>Real-Time Leave Status Tracker</p>
+    </header>
 
-    <hr>
-
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="student_login.html">Student Login</a>
+        <a href="apply_leave.html">Apply Leave</a>
+        <a href="status_tracker.html">Track Status</a>
+        <a href="admin-login.html">Admin</a>
+    </nav>
 
     <div class="container">
-
         <!-- SEARCH BOX -->
-
         <div class="box">
-
-            <h2 align="center">
-                Leave Status Tracker
-            </h2>
-
-            <form id="statusForm">
-
-                <table>
-
-                    <tr>
-
-                        <td>
-                            PRN Number
-                        </td>
-
-                        <td>
-
-                            <input
-                                type="text"
-                                id="prn"
-                                placeholder="Enter PRN Number"
-                                required>
-
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td colspan="2">
-
-                            <button type="submit">
-                                Check Status
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-                </table>
-
+            <h2 align="center" style="color: #287da5;">Track Leave Application</h2>
+            <form id="statusForm" onsubmit="searchStatus(event)">
+                <div class="search-row">
+                    <input type="text" id="prn" placeholder="Enter PRN Number (e.g. PRN12345)" required>
+                    <button type="submit" id="searchBtn">Check Status</button>
+                </div>
             </form>
-
-
             <p id="message" class="message"></p>
-
         </div>
-
 
         <!-- RESULT -->
-
-        <div
-            class="box"
-            id="resultBox"
-            style="display:none;">
-
-            <h3 align="center">
-                Your Leave Applications
-            </h3>
-
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>Application ID</th>
-                        <th>Student Name</th>
-                        <th>Leave Type</th>
-                        <th>From</th>
-                        <th>To</th>
-                        <th>Reason</th>
-                        <th>Status</th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody id="result">
-
-                </tbody>
-
-            </table>
-
+        <div class="box" id="resultBox" style="display:none;">
+            <h3 align="center" style="color: #287da5; margin-bottom: 15px;">Your Leave Applications</h3>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Application ID</th>
+                            <th>Student Name</th>
+                            <th>Department</th>
+                            <th>Leave Type</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="result"></tbody>
+                </table>
+            </div>
         </div>
-
     </div>
 
+    <footer>
+        <p>© 2026 Student Leave Management System</p>
+    </footer>
 
-    <hr>
-
-
-    <center>
-
-        <a href="index.html">
-            Home
-        </a>
-
-        |
-
-        <a href="student_login.html">
-            Student Login
-        </a>
-
-        |
-
-        <a href="apply_leave.html">
-            Apply Leave
-        </a>
-
-    </center>
-
-
-    <hr>
-
-
-    <p align="center">
-        © 2026 Student Leave Management System
-    </p>
-
+    <!-- Supabase Library & Config -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
 
     <script>
-
-        document
-        .getElementById("statusForm")
-        .addEventListener("submit", function(event) {
-
-            event.preventDefault();
-
-
-            let prn =
-                document
-                .getElementById("prn")
-                .value
-                .trim();
-
-
-            let applications =
-                JSON.parse(
-                    localStorage.getItem("leaveApplications")
-                ) || [];
-
-
-            let studentApplications =
-                applications.filter(function(application) {
-
-                    return application.prn === prn;
-
-                });
-
-
-            let message =
-                document.getElementById("message");
-
-
-            let resultBox =
-                document.getElementById("resultBox");
-
-
-            let result =
-                document.getElementById("result");
-
-
-            if (studentApplications.length === 0) {
-
-                resultBox.style.display = "none";
-
-                message.innerHTML =
-                    "❌ No leave applications found for this PRN.";
-
-                message.style.color = "red";
-
-                return;
-
+        // Check for URL parameter ?prn=... on load
+        window.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const prnParam = urlParams.get("prn");
+            if (prnParam) {
+                document.getElementById("prn").value = prnParam;
+                executeSearch(prnParam);
+            } else {
+                // Check if student session has PRN
+                try {
+                    const sessionStudent = sessionStorage.getItem("currentStudent");
+                    if (sessionStudent) {
+                        const s = JSON.parse(sessionStudent);
+                        if (s.prn) {
+                            document.getElementById("prn").value = s.prn;
+                            executeSearch(s.prn);
+                        }
+                    }
+                } catch(e) {}
             }
-
-
-            result.innerHTML = "";
-
-
-            studentApplications.forEach(function(application) {
-
-                let originalIndex =
-                    applications.indexOf(application);
-
-
-                let applicationId =
-                    "LA" +
-                    String(originalIndex + 1)
-                    .padStart(3, "0");
-
-
-                let statusClass =
-                    application.status.toLowerCase();
-
-
-                result.innerHTML += `
-
-                    <tr>
-
-                        <td>
-                            ${applicationId}
-                        </td>
-
-                        <td>
-                            ${application.studentName}
-                        </td>
-
-                        <td>
-                            ${application.leaveType}
-                        </td>
-
-                        <td>
-                            ${application.fromDate}
-                        </td>
-
-                        <td>
-                            ${application.toDate}
-                        </td>
-
-                        <td>
-                            ${application.reason}
-                        </td>
-
-                        <td class="${statusClass}">
-                            ${application.status}
-                        </td>
-
-                    </tr>
-
-                `;
-
-            });
-
-
-            resultBox.style.display = "block";
-
-
-            message.innerHTML =
-                "✅ Leave applications found.";
-
-            message.style.color = "green";
-
         });
 
-    </script>
-<!-- Supabase Library -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<!-- Your Connection Script -->
-<script src="supabase.js"></script>
-</body>
+        function searchStatus(event) {
+            event.preventDefault();
+            const prn = document.getElementById("prn").value.trim();
+            executeSearch(prn);
+        }
 
+        async function executeSearch(prn) {
+            const message = document.getElementById("message");
+            const resultBox = document.getElementById("resultBox");
+            const resultTbody = document.getElementById("result");
+            const searchBtn = document.getElementById("searchBtn");
+
+            if (!prn) return;
+
+            searchBtn.disabled = true;
+            searchBtn.innerText = "Searching...";
+            message.innerHTML = "";
+            resultBox.style.display = "none";
+
+            let applications = [];
+
+            // 1. Fetch from Supabase Database
+            if (window.supabaseClient) {
+                try {
+                    const { data, error } = await supabaseClient
+                        .from("leave_applications")
+                        .select("*")
+                        .eq("prn", prn)
+                        .order("created_at", { ascending: false });
+
+                    if (!error && Array.isArray(data)) {
+                        applications = data.map(app => ({
+                            id: app.id ? `LA${String(app.id).padStart(3, "0")}` : "LA-APP",
+                            studentName: app.student_name,
+                            department: app.department || "N/A",
+                            leaveType: app.leave_type,
+                            fromDate: app.from_date,
+                            toDate: app.to_date,
+                            reason: app.reason,
+                            status: app.status || "Pending"
+                        }));
+                    }
+                } catch (err) {
+                    console.warn("Supabase fetch error:", err);
+                }
+            }
+
+            // 2. Fallback to LocalStorage if nothing found in cloud
+            if (applications.length === 0) {
+                try {
+                    const localApps = JSON.parse(localStorage.getItem("leaveApplications")) || [];
+                    const filteredLocal = localApps.filter(app => app.prn === prn);
+                    filteredLocal.forEach((app, idx) => {
+                        applications.push({
+                            id: `LA${String(idx + 1).padStart(3, "0")}`,
+                            studentName: app.studentName,
+                            department: app.department || "N/A",
+                            leaveType: app.leaveType,
+                            fromDate: app.fromDate,
+                            toDate: app.toDate,
+                            reason: app.reason,
+                            status: app.status || "Pending"
+                        });
+                    });
+                } catch (e) {}
+            }
+
+            searchBtn.disabled = false;
+            searchBtn.innerText = "Check Status";
+
+            if (applications.length === 0) {
+                message.innerHTML = `❌ No leave applications found for PRN: <b>${prn}</b>`;
+                message.style.color = "#dc2626";
+                return;
+            }
+
+            // Render Results
+            resultTbody.innerHTML = "";
+            applications.forEach(app => {
+                const statusLower = (app.status || "pending").toLowerCase();
+                let badgeClass = "status-pending";
+                if (statusLower === "approved") badgeClass = "status-approved";
+                if (statusLower === "rejected") badgeClass = "status-rejected";
+
+                resultTbody.innerHTML += `
+                    <tr>
+                        <td><b>${app.id}</b></td>
+                        <td>${app.studentName}</td>
+                        <td>${app.department}</td>
+                        <td>${app.leaveType}</td>
+                        <td>${app.fromDate}</td>
+                        <td>${app.toDate}</td>
+                        <td>${app.reason}</td>
+                        <td><span class="status-badge ${badgeClass}">${app.status}</span></td>
+                    </tr>
+                `;
+            });
+
+            resultBox.style.display = "block";
+            message.innerHTML = `✅ Found <b>${applications.length}</b> application(s) for PRN: <b>${prn}</b>`;
+            message.style.color = "#16a34a";
+        }
+    </script>
+</body>
 </html>
